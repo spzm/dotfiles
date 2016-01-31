@@ -1,18 +1,23 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " General plugins
+" Plug 'quozd/base16-vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
+Plug 'altercation/vim-colors-solarized'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'itchyny/landscape.vim'
+Plug 'itchyny/lightline.vim' " Enchased status line
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+
+" Search plugins
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Plug 'quozd/base16-vim'
-Plug 'crooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'altercation/vim-colors-solarized'
-"Plug 'itchyny/lightline.vim' " Enchased status line
 
 " HTML support
 Plug 'othree/html5.vim', { 'for': 'html' }
@@ -94,11 +99,29 @@ set nobackup
 set nowb
 set noswapfile
 
+" Lightline setup
+let g:lightline = {
+    \   'colorscheme': 'wombat',
+    \   'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+    \ },
+    \ 'component': {
+    \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+    \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+    \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+    \ },
+    \ 'component_visible_condition': {
+    \   'readonly': '(&filetype!="help"&& &readonly)',
+    \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+    \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+    \ },
+    \}
+
 " set colorscheme
 " set base16colorspace=256
 " set background=dark
 " colorscheme base16-tomorrow
-syntax enable
 if $TERM == "xterm-256color"
   set t_Co=256
 endif
