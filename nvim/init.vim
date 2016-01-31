@@ -1,24 +1,26 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " General plugins
-Plug 'quozd/base16-vim'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
-Plug 'airblade/vim-gitgutter'
+Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
+Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'Shougo/deoplete.nvim'
+" Plug 'quozd/base16-vim'
+Plug 'crooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'altercation/vim-colors-solarized'
 "Plug 'itchyny/lightline.vim' " Enchased status line
 
 " HTML support
 Plug 'othree/html5.vim', { 'for': 'html' }
 
 " Javascript support
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 call plug#end()
 
@@ -96,6 +98,13 @@ set noswapfile
 " set base16colorspace=256
 " set background=dark
 " colorscheme base16-tomorrow
+syntax enable
+if $TERM == "xterm-256color"
+  set t_Co=256
+endif
+let g:solarized_termcolors=256
+set background=dark
+colorscheme solarized
 
 " Sync " and + registers
 set clipboard=unnamedplus

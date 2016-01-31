@@ -47,7 +47,7 @@ success "Config copied"
   success "Nvim is set up as default"
 )
 
-vim -i None -c PlugUpdate -c quitall
+    vim -i NONE -c PlugUpdate -c quitall
 success "Plugins were installed"
 
 # Finishing
