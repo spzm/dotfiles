@@ -1,20 +1,19 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " General plugins
-" Plug 'quozd/base16-vim'
 Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/landscape.vim'
+Plug 'terryma/vim-expand-region'
 Plug 'itchyny/lightline.vim' " Enchased status line
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-fugitive'
+Plug 'benekastah/neomake'
 
 " Search plugins
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -99,33 +98,7 @@ set nobackup
 set nowb
 set noswapfile
 
-" Lightline setup
-let g:lightline = {
-    \   'colorscheme': 'wombat',
-    \   'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-    \ },
-    \ 'component': {
-    \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
-    \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-    \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-    \ },
-    \ 'component_visible_condition': {
-    \   'readonly': '(&filetype!="help"&& &readonly)',
-    \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-    \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-    \ },
-    \}
-
 " set colorscheme
-" set base16colorspace=256
-" set background=dark
-" colorscheme base16-tomorrow
-if $TERM == "xterm-256color"
-  set t_Co=256
-endif
-let g:solarized_termcolors=256
 set background=dark
 colorscheme solarized
 
@@ -145,9 +118,12 @@ map <C-n> :NERDTreeToggle<CR>
 " Toggle between line numbers and relative line numbers
 nnoremap <silent><leader>u :exe "set " . (&relativenumber == 1 ? "norelativenumber" : "relativenumber")<cr>
 
+" CtrlP
+let g:ctrlp_show_hidden = 1
+
 " FZF
 nnoremap <silent><C-P> :Files<CR>
-"nnoremap <silent><Leader><Enter>  :Buffers<CR>
+nnoremap <silent><Leader><Enter>  :Buffers<CR>
 
 " move between splits with hjkl
 map <C-H> <C-W>h
@@ -167,6 +143,17 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+" Linting support
+"autocmd FileType javascript InsertChange,TextChanged * update | :Neomake
+autocmd BufWrite * :Neomake
+
+let g:neomake_javascript_enabled_makers = ['eslint']
+
+" load local eslint in the project root
+" modified from https://github.com/mtscout6/syntastic-local-eslint.vim
+let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
+let g:neomake_javascript_eslint_exe = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
+
 "
 " Autocmd
 "
@@ -180,3 +167,15 @@ au BufRead,BufNewFile *.es6 setfiletype javascript
 " Toggle between line numbers and relative line numbers
 au InsertEnter * :set norelativenumber
 au InsertLeave * :set relativenumber
+
+" Fix yank for X11 clipboard
+function! ClipboardYank()
+  call system('xclip -i -selection clipboard', @@)
+endfunction
+function! ClipboardPaste()
+  let @@ = system('xclip -o -selection clipboard')
+endfunction
+
+vnoremap <silent> y y:call ClipboardYank()<cr>
+vnoremap <silent> d d:call ClipboardYank()<cr>
+nnoremap <silent> p p:call ClipboardPaste()<cr>

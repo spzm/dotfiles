@@ -6,6 +6,7 @@ install_nvim:
 	sudo apt-get install python-dev python-pip python3-dev python3-pip
 	pip install neovim
 	pip3 install neovim
+	sudo apt-get install xclip
 
 set_default_nvim:
 	sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
