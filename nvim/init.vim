@@ -7,16 +7,18 @@ Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/landscape.vim'
-Plug 'terryma/vim-expand-region'
-Plug 'itchyny/lightline.vim' " Enchased status line
+Plug 'vim-airline/vim-airline'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'benekastah/neomake'
+Plug 'chriskempson/base16-vim'
+Plug 'tpope/vim-fugitive'
 
 " Search plugins
 Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'dkprice/vim-easygrep'
 
 " HTML support
 Plug 'othree/html5.vim', { 'for': 'html' }
@@ -100,7 +102,9 @@ set noswapfile
 
 " set colorscheme
 set background=dark
-colorscheme solarized
+let base16colorspace=256
+colorscheme base16-harmonic16
+"colorscheme solarized
 
 " Sync " and + registers
 set clipboard=unnamedplus

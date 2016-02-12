@@ -5,7 +5,8 @@ set -e
 
 # Set variable
 
-ROOT_DIRECTORY=$(pwd -P)
+DOTFILES_ROOT=$(pwd -P)
+HOME_DIRECTORY=~/
 XDG_CONFIG_HOME=~/.config
 
 
@@ -32,15 +33,15 @@ fail () {
 
 info "Configuring vim"
 
-curl -fLo ${ROOT_DIRECTORY}/nvim/autoload/plug.vim --create-dirs \
+curl -fLo ${DOTFILES_ROOT}/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 success "Vim plugin copied"
 
 mkdir -p ${XDG_CONFIG_HOME}
-echo ${ROOT_DIRECTORY}
+echo ${DOTFILES_ROOT}
 echo ${XDG_CONFIG_HOME}
-ln -snf ${ROOT_DIRECTORY}/nvim ${XDG_CONFIG_HOME}/nvim
-success "Config copied"
+ln -snf ${DOTFILES_ROOT}/nvim ${XDG_CONFIG_HOME}/nvim
+success "Config has copied"
 
 (
   make set_default_nvim
@@ -50,9 +51,16 @@ success "Config copied"
     vim -i NONE -c PlugUpdate -c quitall
 success "Plugins were installed"
 
+# Git
+
+ln -snf ${DOTFILES_ROOT}/git/gitconfig ${HOME_DIRECTORY}/.gitconfig
+success "Git config has copied"
+
 # Finishing
 
-unset ROOT_DIRECTORY
+unset DOTFILES_ROOT
+unset HOME_DIRECTORY
+unset XDG_CONFIG_HOME
 
 success "Configuration finished"
 

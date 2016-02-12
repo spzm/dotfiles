@@ -1,0 +1,19 @@
+[user]
+  name = Uladzimir Dziomin
+  email = uladzimir.dziomin@gmail.com
+[credential]
+  helper = store
+[push]
+  default = simple
+[core]
+  editor = nvim
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+[merge]
+  tool = vimdiff
+  conflictstyle = diff3
+[mergetool]
+  prompt = true
