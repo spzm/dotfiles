@@ -5,20 +5,25 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'itchyny/landscape.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
 Plug 'benekastah/neomake'
 Plug 'chriskempson/base16-vim'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'itchyny/landscape.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
 
 " Search plugins
 Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'dkprice/vim-easygrep'
+Plug 'jeetsukumaran/vim-filesearch'
+
+" Markdown support
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 
 " HTML support
 Plug 'othree/html5.vim', { 'for': 'html' }
@@ -27,6 +32,9 @@ Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+
+" Nginx
+Plug 'vim-scripts/nginx.vim'
 
 call plug#end()
 
@@ -75,6 +83,7 @@ set incsearch
 set showmatch
 set noerrorbells
 set novisualbell
+set visualbell t_vb=
 set laststatus=2
 set number
 set autoindent
