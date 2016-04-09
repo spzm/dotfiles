@@ -78,9 +78,20 @@ ln -snf "${DOTFILES_ROOT}/zsh/zshrc" "${HOME_DIRECTORY}/.zshrc"
 ln -snf "${DOTFILES_ROOT}/zsh/oh-my-zsh" "${HOME_DIRECTORY}/.oh-my-zsh"
 (
   cd "${HOME_DIRECTORY}/.oh-my-zsh/plugins"
+  rm -rf ./*
   git clone https://github.com/chrissicool/zsh-256color
 )
 chsh -s /bin/zsh
+
+
+#
+# Section: tmux
+#
+info "Configuring tmux"
+
+ln -snf "${DOTFILES_ROOT}/tmux/tmux.conf" "${HOME_DIRECTORY}/.tmux.conf"
+
+success "Tmux is configured"
 
 
 # Finishing
