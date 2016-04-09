@@ -8,6 +8,10 @@ install_nvim:
 	pip3 install neovim
 	sudo apt-get install xclip
 
+install_zsh:
+	sydo apt-get install git
+	sudo apt-get install zsh
+
 set_default_nvim:
 	sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
 	sudo update-alternatives --config vi

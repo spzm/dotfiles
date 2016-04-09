@@ -29,18 +29,26 @@ fail () {
   exit
 }
 
-# Neovim
+# Update submodules
+git submodule init
+git submodule update
 
+
+#
+# Section: neovim
+#
 info "Configuring vim"
 
-curl -fLo ${DOTFILES_ROOT}/nvim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo "${DOTFILES_ROOT}/nvim/autoload/plug.vim" --create-dirs \
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 success "Vim plugin copied"
 
 mkdir -p ${XDG_CONFIG_HOME}
-echo ${DOTFILES_ROOT}
+echo "${DOTFILES_ROOT}"
 echo ${XDG_CONFIG_HOME}
-ln -snf ${DOTFILES_ROOT}/nvim ${XDG_CONFIG_HOME}/nvim
+ln -snf "${DOTFILES_ROOT}/nvim" "${XDG_CONFIG_HOME}/nvim"
+
 success "Config has copied"
 
 (
@@ -48,13 +56,32 @@ success "Config has copied"
   success "Nvim is set up as default"
 )
 
-    vim -i NONE -c PlugUpdate -c quitall
+vim -i NONE -c PlugUpdate -c quitall
 success "Plugins were installed"
 
-# Git
 
-ln -snf ${DOTFILES_ROOT}/git/gitconfig ${HOME_DIRECTORY}/.gitconfig
+#
+# Section: git
+#
+info "Configurig git"
+
+ln -snf "${DOTFILES_ROOT}/git/gitconfig" "${HOME_DIRECTORY}/.gitconfig"
 success "Git config has copied"
+
+
+#
+# Section: oh-my-zsh
+#
+info "Configurig oh-my-zsh"
+
+ln -snf "${DOTFILES_ROOT}/zsh/zshrc" "${HOME_DIRECTORY}/.zshrc"
+ln -snf "${DOTFILES_ROOT}/zsh/oh-my-zsh" "${HOME_DIRECTORY}/.oh-my-zsh"
+(
+  cd "${HOME_DIRECTORY}/.oh-my-zsh/plugins"
+  git clone https://github.com/chrissicool/zsh-256color
+)
+chsh -s /bin/zsh
+
 
 # Finishing
 
