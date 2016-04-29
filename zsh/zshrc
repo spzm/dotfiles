@@ -12,9 +12,6 @@ CASE_SENSITIVE="true"
 # sensitive completion must be off. _ and - will be interchangeable.
 HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 
@@ -37,9 +34,6 @@ export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64/jre"
 
 source $ZSH/oh-my-zsh.sh
 
-# Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/base16-harmonic16.dark.sh"
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 # Make easy switch between application and terminal by ctrl-z
 fancy-ctrl-z () {
@@ -59,7 +53,6 @@ bindkey '^Z' fancy-ctrl-z
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-export TERM=xterm-256color
 printf "$(tput setaf 2)"
 echo '         __                                     __   '
 echo '  ____  / /_     ____ ___  __  __   ____  _____/ /_  '
