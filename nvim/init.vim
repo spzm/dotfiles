@@ -4,15 +4,15 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
-Plug 'altercation/vim-colors-solarized'
 Plug 'benekastah/neomake'
 Plug 'chriskempson/base16-vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'itchyny/landscape.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
+Plug 'gosukiwi/vim-atom-dark'
+Plug 'lsdr/monokai'
 
 " Search plugins
 Plug 'rking/ag.vim'
@@ -28,10 +28,22 @@ Plug 'plasticboy/vim-markdown'
 " HTML support
 Plug 'othree/html5.vim', { 'for': 'html' }
 
+" CSS support
+Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
+
 " Javascript support
-Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
+Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' }
+
+" Jsdock sytax
+
+" Python support
+Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
+Plug 'nvie/vim-flake8', { 'for': 'python' }
 
 " Nginx
 Plug 'vim-scripts/nginx.vim'
@@ -95,7 +107,7 @@ set tabstop=4
 set expandtab
 
 " Display tabs and trailing spaces visually
-set list listchars=tab:\ \ ,trail:·
+set list listchars=tab:»·,trail:·,nbsp:·
 
 set nowrap
 
@@ -110,10 +122,11 @@ set nowb
 set noswapfile
 
 " set colorscheme
-set background=dark
+set t_Co=256
 let base16colorspace=256
-colorscheme base16-harmonic16
-"colorscheme solarized
+set background=dark
+colorscheme base16-railscasts
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Sync " and + registers
 set clipboard=unnamedplus
@@ -177,6 +190,9 @@ au BufWritePre * :%s/\s\+$//e
 " File types
 au BufRead,BufNewFile *.es6 setfiletype javascript
 
+"Setup Javascript plugins
+let g:used_javascript_libs = 'react,chai,handlebars,underscore'
+
 " Toggle between line numbers and relative line numbers
 au InsertEnter * :set norelativenumber
 au InsertLeave * :set relativenumber
@@ -188,6 +204,23 @@ endfunction
 function! ClipboardPaste()
   let @@ = system('xclip -o -selection clipboard')
 endfunction
+
+" Python features
+
+" PEP8 identation
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+" Show wrong whitespaces
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+let python_highlight_all=1
 
 vnoremap <silent> y y:call ClipboardYank()<cr>
 vnoremap <silent> d d:call ClipboardYank()<cr>
