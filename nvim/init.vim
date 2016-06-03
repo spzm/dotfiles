@@ -11,8 +11,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
-Plug 'gosukiwi/vim-atom-dark'
-Plug 'lsdr/monokai'
 
 " Search plugins
 Plug 'rking/ag.vim'
@@ -32,9 +30,9 @@ Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 
 " Javascript support
-Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
-Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
+"Plug 'othree/yajs.vim', { 'for': 'javascript' }
+"Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
+"Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' }
@@ -44,6 +42,9 @@ Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' }
 " Python support
 Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
 Plug 'nvie/vim-flake8', { 'for': 'python' }
+
+" Elm support
+Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
 
 " Nginx
 Plug 'vim-scripts/nginx.vim'
@@ -64,6 +65,8 @@ let g:deoplete#file#enable_buffer_path = 1
 " NERDTree configuration
 let NERDTreeDirArrows=1
 let NERDTreeShowHidden=1
+" NERDCommenter
+let NERDSpaceDelims=1
 
 " Split window verticaly on UltiSnipsEdit
 let g:UltiSnipsEditSplit="vertical"
@@ -122,8 +125,8 @@ set nowb
 set noswapfile
 
 " set colorscheme
-set t_Co=256
 let base16colorspace=256
+set t_Co=256
 set background=dark
 colorscheme base16-railscasts
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -191,7 +194,7 @@ au BufWritePre * :%s/\s\+$//e
 au BufRead,BufNewFile *.es6 setfiletype javascript
 
 "Setup Javascript plugins
-let g:used_javascript_libs = 'react,chai,handlebars,underscore'
+"let g:used_javascript_libs = 'react,chai,handlebars,underscore'
 
 " Toggle between line numbers and relative line numbers
 au InsertEnter * :set norelativenumber

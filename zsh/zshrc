@@ -26,6 +26,9 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(sudo git npm nvm node man colorize ubuntu virtualenv frontend-search zsh-256color)
 
+BASE16_SHELL="$HOME/.config/base16-shell/base16-railscasts.dark.sh"
+[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
 # User configuration
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
 export EC2_HOME=/usr/local/ec2/ec2-api-tools-1.7.5.1
@@ -67,3 +70,5 @@ export NVM_DIR="/home/uladzimir_dziomin/.nvm"
 
 # hack to keep a bash open when starting terminator with a command
 [[ $startup_cmd ]] && eval "$startup_cmd"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

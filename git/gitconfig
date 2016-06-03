@@ -19,3 +19,5 @@
   conflictstyle = diff3
 [mergetool]
   prompt = true
+[diff]
+  external = git_diff_wrapper
