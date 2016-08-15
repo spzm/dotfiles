@@ -72,3 +72,5 @@ export NVM_DIR="/home/uladzimir_dziomin/.nvm"
 [[ $startup_cmd ]] && eval "$startup_cmd"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+unalias ag
