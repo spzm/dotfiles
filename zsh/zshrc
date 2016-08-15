@@ -73,4 +73,5 @@ export NVM_DIR="/home/uladzimir_dziomin/.nvm"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Unalias silver searcher
 unalias ag
