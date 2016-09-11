@@ -131,6 +131,7 @@ set t_Co=256
 set background=dark
 colorscheme base16-railscasts
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors
 
 " Sync " and + registers
 set clipboard=unnamedplus
