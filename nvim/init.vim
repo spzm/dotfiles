@@ -11,6 +11,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-obsession'
 
 " Search plugins
 Plug 'rking/ag.vim'
@@ -176,7 +177,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " Linting support
 "autocmd FileType javascript InsertChange,TextChanged * update | :Neomake
-autocmd BufWrite * :Neomake
+autocmd BufRead,BufWrite,BufReadPost,BufWritePost,BufEnter * :Neomake
 
 let g:neomake_javascript_enabled_makers = ['eslint']
 
