@@ -12,6 +12,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-obsession'
+Plug 'eugen0329/vim-esearch'
 
 " Search plugins
 Plug 'rking/ag.vim'
@@ -31,8 +32,8 @@ Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 
 " Javascript support
-"Plug 'othree/yajs.vim', { 'for': 'javascript' }
-"Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
 "Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
@@ -197,7 +198,7 @@ au BufWritePre * :%s/\s\+$//e
 au BufRead,BufNewFile *.es6 setfiletype javascript
 
 "Setup Javascript plugins
-"let g:used_javascript_libs = 'react,chai,handlebars,underscore'
+let g:used_javascript_libs = 'react,chai,handlebars,underscore,angularjs,angularui,angularuirouter'
 
 " Toggle between line numbers and relative line numbers
 au InsertEnter * :set norelativenumber
