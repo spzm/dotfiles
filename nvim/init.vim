@@ -118,6 +118,12 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
+" Russian layout fixes
+set keymap=russian-jcukenwin
+set iminsert=0
+set imsearch=0
+highlight lCursor guifg=NONE guibg=Cyan
+
 " Display tabs and trailing spaces visually
 set list listchars=tab:»·,trail:·,nbsp:·
 
