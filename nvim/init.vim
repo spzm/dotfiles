@@ -10,16 +10,16 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
 Plug 'tpope/vim-obsession'
-Plug 'eugen0329/vim-esearch'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Search plugins
+Plug 'tpope/vim-repeat'
 Plug 'rking/ag.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'dkprice/vim-easygrep'
-Plug 'jeetsukumaran/vim-filesearch'
+Plug 'mhinz/vim-grepper'
 
 " Markdown support
 Plug 'godlygeek/tabular'
@@ -32,12 +32,11 @@ Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 
 " Javascript support
-Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
-"Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' }
+Plug 'benjie/neomake-local-eslint.vim', { 'for': 'javascript' }
 
 " Jsdock sytax
 
@@ -67,12 +66,19 @@ let g:deoplete#file#enable_buffer_path = 1
 
 " NERDTree configuration
 let NERDTreeDirArrows=1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeWinSize = 50
 let NERDTreeShowHidden=1
+
 " NERDCommenter
 let NERDSpaceDelims=1
 
 " Split window verticaly on UltiSnipsEdit
 let g:UltiSnipsEditSplit="vertical"
+
+" Airline config
+let g:airline#extensions#tabline#enabled = 1
 
 "
 " Env variables
@@ -107,9 +113,9 @@ set number
 set autoindent
 set smartindent
 set smarttab
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set expandtab
 
 " Display tabs and trailing spaces visually
@@ -176,16 +182,12 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+" Grepper
+nnoremap <leader>p :Grepper<cr>
+
 " Linting support
-"autocmd FileType javascript InsertChange,TextChanged * update | :Neomake
 autocmd BufRead,BufWrite,BufReadPost,BufWritePost,BufEnter * :Neomake
-
 let g:neomake_javascript_enabled_makers = ['eslint']
-
-" load local eslint in the project root
-" modified from https://github.com/mtscout6/syntastic-local-eslint.vim
-let s:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
-let g:neomake_javascript_eslint_exe = substitute(s:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 
 "
 " Autocmd
@@ -197,8 +199,8 @@ au BufWritePre * :%s/\s\+$//e
 " File types
 au BufRead,BufNewFile *.es6 setfiletype javascript
 
-"Setup Javascript plugins
-let g:used_javascript_libs = 'react,chai,handlebars,underscore,angularjs,angularui,angularuirouter'
+" Setup Javascript plugins
+let g:javascript_plugin_jsdoc = 1
 
 " Toggle between line numbers and relative line numbers
 au InsertEnter * :set norelativenumber
