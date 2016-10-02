@@ -33,8 +33,8 @@ Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 
 " Javascript support
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx'
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' }
 Plug 'benjie/neomake-local-eslint.vim', { 'for': 'javascript' }
 
@@ -89,7 +89,7 @@ let $FZF_DEFAULT_COMMAND='ag -g ""'
 "
 " Common settings
 "
-
+set termencoding=utf-8
 set encoding=utf-8
 set autoread
 set backspace=indent,eol,start
@@ -203,7 +203,9 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 au BufWritePre * :%s/\s\+$//e
 
 " File types
-au BufRead,BufNewFile *.es6 setfiletype javascript
+let g:jsx_ext_required = 0
+au BufRead,BufNewFile *.es6 setfiletype javascript.jsx
+highlight link xmlEndTag xmlTag
 
 " Setup Javascript plugins
 let g:javascript_plugin_jsdoc = 1
