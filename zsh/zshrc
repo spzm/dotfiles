@@ -26,7 +26,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(sudo git npm nvm node man colorize ubuntu virtualenv frontend-search zsh-256color)
 
-BASE16_SHELL="$HOME/.config/base16-shell/base16-railscasts.dark.sh"
+# BASE16_SHELL="$HOME/.config/base16-shell/base16-railscasts.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 # User configuration
