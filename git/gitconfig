@@ -1,3 +1,20 @@
+[alias]
+  ci = commit
+  co = checkout
+  st = status
+  la = diff --cached --name-only
+  ls = ls-files -m
+  tree = log --graph --decorate --pretty=oneline --abbrev-commit
+  lg = log --name-status --decorate
+  lf = log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"
+  lr = log -C --summary --decorate
+  ld = log --oneline --decorate
+  plg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	out = log @{u}.. --decorate
+	outall = log --branches --not --remotes --decorate
+	new = ls-files -o --exclude-standard
+	gone = ls-files -d
+
 [user]
   name = Uladzimir Dziomin
   email = uladzimir.dziomin@gmail.com
@@ -7,8 +24,6 @@
   default = simple
 [core]
   editor = nvim
-[alias]
-  tree = log --graph --decorate --pretty=oneline --abbrev-commit
 [color]
   diff = auto
   status = auto

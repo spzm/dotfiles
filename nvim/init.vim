@@ -13,6 +13,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'w0ng/vim-hybrid'
 
 " Search plugins
 Plug 'tpope/vim-repeat'
@@ -37,6 +38,9 @@ Plug 'mxw/vim-jsx'
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
 Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' }
 Plug 'benjie/neomake-local-eslint.vim', { 'for': 'javascript' }
+
+" Unit tests
+Plug 'janko-m/vim-test'
 
 " Jsdock sytax
 
@@ -84,7 +88,7 @@ let g:airline#extensions#tabline#enabled = 1
 " Env variables
 "
 
-let $FZF_DEFAULT_COMMAND='ag -g ""'
+let $FZF_DEFAULT_COMMAND='ag --skip-vcs-ignores -g ""'
 
 "
 " Common settings
@@ -127,7 +131,7 @@ highlight lCursor guifg=NONE guibg=Cyan
 " Display tabs and trailing spaces visually
 set list listchars=tab:»·,trail:·,nbsp:·
 
-set nowrap
+set wrap
 
 " show completion options on <TAB>
 set wildmenu
@@ -143,7 +147,7 @@ set noswapfile
 let base16colorspace=256
 set t_Co=256
 set background=dark
-colorscheme base16-railscasts
+colorscheme hybrid
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set termguicolors
 
@@ -155,7 +159,15 @@ set clipboard=unnamedplus
 "
 
 " Map leader
-let mapleader=","
+let mapleader="\<Space>"
+let maplocalleader = "\<Space>"
+
+" reload init.vim
+nnoremap <silent> <leader>ev :tabe $HOME/.config/nvim/init.vim<CR>
+" edit init.vim
+nnoremap <silent> <leader>sv :so $HOME/.config/nvim/init.vim<CR>
+" switch between the last two files
+map <Tab> :b#<CR>
 
 " Nerd tree
 map <C-n> :NERDTreeToggle<CR>
@@ -168,7 +180,9 @@ let g:ctrlp_show_hidden = 1
 
 " FZF
 nnoremap <silent><C-P> :Files<CR>
+nmap <silent><C-F> :Ag<CR>
 nnoremap <silent><Leader><Enter>  :Buffers<CR>
+let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 " move between splits with hjkl
 map <C-H> <C-W>h
@@ -195,6 +209,7 @@ nnoremap <leader>p :Grepper<cr>
 autocmd BufRead,BufWrite,BufReadPost,BufWritePost,BufEnter * :Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
 
+
 "
 " Autocmd
 "
@@ -204,7 +219,7 @@ au BufWritePre * :%s/\s\+$//e
 
 " File types
 let g:jsx_ext_required = 0
-au BufRead,BufNewFile *.es6 setfiletype javascript.jsx
+au BufRead,BufNewFile *.es6 setfiletype javascript
 highlight link xmlEndTag xmlTag
 
 " Setup Javascript plugins
@@ -238,3 +253,14 @@ au BufNewFile,BufRead *.py
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 let python_highlight_all=1
+
+
+" vim-test
+let test#javascript#mocha#executable = 'npm run test'
+let g:test#javascript#mocha#file_pattern = '\.spec\.*'
+let test#strategy = "neovim"
+
+map <leader>sr :TestSuite<CR>
+map <leader>ss :TestNearest<CR>
+map <leader>sf :TestFile<CR>
+map <leader>sl :TestLast<CR>
