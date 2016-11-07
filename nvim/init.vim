@@ -33,11 +33,13 @@ Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 
 " Javascript support
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
 Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' }
 Plug 'benjie/neomake-local-eslint.vim', { 'for': 'javascript' }
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
 
 " Unit tests
 Plug 'janko-m/vim-test'
@@ -65,6 +67,17 @@ call plug#end()
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources = {}
 let g:deoplete#sources._ = ['buffer', 'file', 'ultisnips']
+let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'ultisnips', 'ternjs']
+" Use tern_for_vim.
+let g:tern#command = ["tern"]
+let g:tern#arguments = ["--persistent"]
+" Setup ternjs for deoplete
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+  \ 'tern#Complete'
+\]
+" close the preview window when you're not using it
+let g:SuperTabClosePreviewOnPopupClose = 1
 
 let g:deoplete#file#enable_buffer_path = 1
 
@@ -72,7 +85,7 @@ let g:deoplete#file#enable_buffer_path = 1
 let NERDTreeDirArrows=1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
-let g:NERDTreeWinSize = 50
+let g:NERDTreeWinSize = 35
 let NERDTreeShowHidden=1
 
 " NERDCommenter
@@ -198,7 +211,7 @@ xnoremap <  <gv
 xnoremap >  >gv
 
 " Ultisnips
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<C-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
