@@ -5,7 +5,6 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
-Plug 'chriskempson/base16-vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -23,7 +22,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-grepper'
 
 " Markdown support
-Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
 " HTML support
@@ -35,11 +33,10 @@ Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 " Javascript support
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
-Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' }
-Plug 'benjie/neomake-local-eslint.vim', { 'for': 'javascript' }
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'elzr/vim-json', { 'for': ['json'] }
+Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'javascript.jsx'] }
+
 
 " Unit tests
 Plug 'janko-m/vim-test'
@@ -67,19 +64,17 @@ call plug#end()
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources = {}
 let g:deoplete#sources._ = ['buffer', 'file', 'ultisnips']
-let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'ultisnips', 'ternjs']
-" Use tern_for_vim.
-let g:tern#command = ["tern"]
-let g:tern#arguments = ["--persistent"]
-" Setup ternjs for deoplete
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions.javascript = [
-  \ 'tern#Complete'
-\]
+let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'ultisnips']
+let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips'
+
+
 " close the preview window when you're not using it
 let g:SuperTabClosePreviewOnPopupClose = 1
 
 let g:deoplete#file#enable_buffer_path = 1
+
+" JSON plugin
+let g:vim_json_syntax_conceal = 0
 
 " NERDTree configuration
 let NERDTreeDirArrows=1
@@ -101,7 +96,7 @@ let g:airline#extensions#tabline#enabled = 1
 " Env variables
 "
 
-let $FZF_DEFAULT_COMMAND='ag --skip-vcs-ignores -g ""'
+let $FZF_DEFAULT_COMMAND='ag -l -U --ignore={node_modules,.git} -g ""'
 
 "
 " Common settings
@@ -180,7 +175,7 @@ nnoremap <silent> <leader>ev :tabe $HOME/.config/nvim/init.vim<CR>
 " edit init.vim
 nnoremap <silent> <leader>sv :so $HOME/.config/nvim/init.vim<CR>
 " switch between the last two files
-map <Tab> :b#<CR>
+" map <Tab> :b#<CR>
 
 " Nerd tree
 map <C-n> :NERDTreeToggle<CR>
@@ -219,9 +214,21 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 nnoremap <leader>p :Grepper<cr>
 
 " Linting support
+let g:neomake_javascript_eslint_maker = {
+\ 'args': ['--env', 'es6', '-f', 'compact'],
+\ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,%W%f: line %l\, col %c\, Warning - %m'
+\ }
+
 autocmd BufRead,BufWrite,BufReadPost,BufWritePost,BufEnter * :Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
 
+" Javascript libraries syntax
+let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,react,chai,handlebars,d3'
+
+" Gitgutter navigation
+nmap ]h <Plug>GitGutterNextHunk
+nmap [h <Plug>GitGutterPrevHunk
+hi clear SignColumn
 
 "
 " Autocmd
