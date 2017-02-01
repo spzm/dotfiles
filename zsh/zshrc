@@ -75,3 +75,9 @@ export NVM_DIR="/home/uladzimir_dziomin/.nvm"
 
 # Unalias silver searcher
 unalias ag
+
+if [ -d "/home/uladzimir_dziomin/.appix" ]; then export PATH="/home/uladzimir_dziomin/.appix:$PATH"; fi # Add Appix binary folder to the path
+
+export ANDROID_HOME=~/Android/Sdk
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools

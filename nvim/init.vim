@@ -42,6 +42,7 @@ Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'javascript.jsx'
 Plug 'janko-m/vim-test'
 
 " Jsdock sytax
+Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
 
 " Python support
 Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
@@ -63,8 +64,8 @@ call plug#end()
 " Auto start Deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources = {}
-let g:deoplete#sources._ = ['buffer', 'file', 'ultisnips']
-let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'ultisnips']
+let g:deoplete#sources._ = ['ultisnips', 'buffer', 'file']
+let g:deoplete#sources['javascript.jsx'] = ['ultisnips', 'buffer', 'file']
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips'
 
 
@@ -80,7 +81,7 @@ let g:vim_json_syntax_conceal = 0
 let NERDTreeDirArrows=1
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
-let g:NERDTreeWinSize = 35
+let g:NERDTreeWinSize = 40
 let NERDTreeShowHidden=1
 
 " NERDCommenter
@@ -96,7 +97,7 @@ let g:airline#extensions#tabline#enabled = 1
 " Env variables
 "
 
-let $FZF_DEFAULT_COMMAND='ag -l -U --ignore={node_modules,.git} -g ""'
+let $FZF_DEFAULT_COMMAND='ag -l -U --ignore={node_modules,.git} --nocolor -g ""'
 
 "
 " Common settings
@@ -106,7 +107,7 @@ set encoding=utf-8
 set autoread
 set backspace=indent,eol,start
 set ruler
-set colorcolumn=120
+set colorcolumn=100
 set showmode
 set cursorline
 set history=1000
@@ -135,6 +136,9 @@ set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
 highlight lCursor guifg=NONE guibg=Cyan
+
+" enhance replace
+:set inccommand=split
 
 " Display tabs and trailing spaces visually
 set list listchars=tab:»·,trail:·,nbsp:·
@@ -179,6 +183,7 @@ nnoremap <silent> <leader>sv :so $HOME/.config/nvim/init.vim<CR>
 
 " Nerd tree
 map <C-n> :NERDTreeToggle<CR>
+map <Leader>f :NERDTreeFind<CR>
 
 " Toggle between line numbers and relative line numbers
 nnoremap <silent><leader>u :exe "set " . (&relativenumber == 1 ? "norelativenumber" : "relativenumber")<cr>
@@ -206,7 +211,8 @@ xnoremap <  <gv
 xnoremap >  >gv
 
 " Ultisnips
-let g:UltiSnipsExpandTrigger="<C-j>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsListSnippets="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
@@ -218,9 +224,14 @@ let g:neomake_javascript_eslint_maker = {
 \ 'args': ['--env', 'es6', '-f', 'compact'],
 \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,%W%f: line %l\, col %c\, Warning - %m'
 \ }
+let g:neomake_jsx_eslint_maker = {
+\ 'args': ['--env', 'es6', '-f', 'compact'],
+\ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,%W%f: line %l\, col %c\, Warning - %m'
+\ }
 
 autocmd BufRead,BufWrite,BufReadPost,BufWritePost,BufEnter * :Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_jsx_enabled_makers = ['eslint']
 
 " Javascript libraries syntax
 let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,react,chai,handlebars,d3'

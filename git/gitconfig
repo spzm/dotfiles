@@ -34,3 +34,5 @@
   conflictstyle = diff3
 [mergetool]
   prompt = true
+[rerere]
+	enabled = true
