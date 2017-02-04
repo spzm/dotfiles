@@ -78,7 +78,9 @@ ln -snf "${DOTFILES_ROOT}/zsh/zshrc" "${HOME_DIRECTORY}/.zshrc"
 ln -snf "${DOTFILES_ROOT}/zsh/oh-my-zsh" "${HOME_DIRECTORY}/.oh-my-zsh"
 (
   cd "${HOME_DIRECTORY}/.oh-my-zsh/plugins"
-  git clone https://github.com/chrissicool/zsh-256color
+  if [ ! -d "zsh-256color" ]; then
+    git clone https://github.com/chrissicool/zsh-256color
+  fi
 )
 chsh -s /bin/zsh
 
