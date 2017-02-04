@@ -34,5 +34,9 @@
   conflictstyle = diff3
 [mergetool]
   prompt = true
+[mergetool "vimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [rerere]
-	enabled = true
+  enabled = true
+[diff]
+  tool = vimdiff
