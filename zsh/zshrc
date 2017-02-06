@@ -81,3 +81,4 @@ if [ -d "/home/uladzimir_dziomin/.appix" ]; then export PATH="/home/uladzimir_dz
 export ANDROID_HOME=~/Android/Sdk
 export PATH=${PATH}:${ANDROID_HOME}/tools
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+export PATH=~/build/mongodb/bin:$PATH
