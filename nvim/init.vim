@@ -1,10 +1,10 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " General plugins
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
-Plug 'benekastah/neomake'
+Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-fugitive'
@@ -15,7 +15,6 @@ Plug 'w0ng/vim-hybrid'
 
 " Navigation
 Plug 'scrooloose/nerdtree'
-Plug 'majutsushi/tagbar'
 
 " Search plugins
 Plug 'tpope/vim-repeat'
@@ -35,16 +34,8 @@ Plug 'lilydjwg/colorizer', { 'for': ['scss', 'css'] }
 
 " Javascript support
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'mxw/vim-jsx', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'elzr/vim-json', { 'for': ['json'] }
-Plug 'benjie/neomake-local-eslint.vim', { 'for': ['javascript', 'javascript.jsx'] }
-
-
-" Unit tests
+Plug 'MaxMEllon/vim-jsx-pretty',  { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'janko-m/vim-test'
-
-" Jsdock sytax
 Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
 
 " Python support
@@ -90,8 +81,8 @@ let g:NERDTreeWinSize = 40
 let NERDTreeShowHidden=1
 
 " TagBar настройки
-nmap <Leader>t :TagbarToggle<CR>
-let g:tagbar_autofocus = 0 " autofocus on Tagbar when file opens
+"nm ap <Leader>t :TagbarToggle<CR>
+" let g:tagbar_autofocus = 0 " autofocus on Tagbar when file opens
 
 " NERDCommenter
 let NERDSpaceDelims=1
@@ -146,7 +137,7 @@ set encoding=utf-8
 set autoread
 set backspace=indent,eol,start
 set ruler
-set colorcolumn=100
+set colorcolumn=80
 set showmode
 set cursorline
 set history=1000
@@ -252,33 +243,22 @@ xnoremap >  >gv
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsListSnippets="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<c-n>"
 
 " Grepper
 nnoremap <leader>p :Grepper<cr>
 
-" Linting support
-let g:neomake_javascript_eslint_maker = {
-\ 'args': ['--env', 'es6', '-f', 'compact'],
-\ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,%W%f: line %l\, col %c\, Warning - %m'
-\ }
-let g:neomake_jsx_eslint_maker = {
-\ 'args': ['--env', 'es6', '-f', 'compact'],
-\ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,%W%f: line %l\, col %c\, Warning - %m'
-\ }
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'jsx': ['eslint'],
+\}
+let g:ale_sign_error = 'XX'
+let g:ale_sign_warning = '--'
+let g:ale_sign_column_always = 1
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
-autocmd BufRead,BufWrite,BufReadPost,BufWritePost,BufEnter * :Neomake
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_jsx_enabled_makers = ['eslint']
-
-let g:neomake_python_enable_makers = ['pylint']
-
-
-let g:neomake_verbose = -1
-
-" Javascript libraries syntax
-let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,react,chai,handlebars,d3'
+let g:vim_jsx_pretty_colorful_config = 1
 
 " Gitgutter navigation
 nmap ]h <Plug>GitGutterNextHunk
