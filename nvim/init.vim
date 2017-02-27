@@ -7,12 +7,15 @@ Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0ng/vim-hybrid'
+
+" Navigation
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
 
 " Search plugins
 Plug 'tpope/vim-repeat'
@@ -48,6 +51,8 @@ Plug 'heavenshell/vim-jsdoc', { 'for': 'javascript' }
 Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 
 " Elm support
 Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
@@ -84,6 +89,10 @@ let g:NERDTreeDirArrowCollapsible = '▾'
 let g:NERDTreeWinSize = 40
 let NERDTreeShowHidden=1
 
+" TagBar настройки
+nmap <Leader>t :TagbarToggle<CR>
+let g:tagbar_autofocus = 0 " autofocus on Tagbar when file opens
+
 " NERDCommenter
 let NERDSpaceDelims=1
 
@@ -92,7 +101,37 @@ let g:UltiSnipsEditSplit="vertical"
 
 " Airline config
 let g:airline#extensions#tabline#enabled = 1
-
+let g:airline_symbols = {}
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_mode_map = {
+    \ '__' : '-',
+    \ 'n'  : 'N',
+    \ 'i'  : 'I',
+    \ 'R'  : 'R',
+    \ 'c'  : 'C',
+    \ 'v'  : 'V',
+    \ 'V'  : 'V',
+    \ '' : 'V',
+    \ 's'  : 'S',
+    \ 'S'  : 'S',
+    \ '' : 'S',
+    \ }
 "
 " Env variables
 "
@@ -182,8 +221,8 @@ nnoremap <silent> <leader>sv :so $HOME/.config/nvim/init.vim<CR>
 " map <Tab> :b#<CR>
 
 " Nerd tree
-map <C-n> :NERDTreeToggle<CR>
-map <Leader>f :NERDTreeFind<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <silent><leader>f :NERDTreeFind<cr>
 
 " Toggle between line numbers and relative line numbers
 nnoremap <silent><leader>u :exe "set " . (&relativenumber == 1 ? "norelativenumber" : "relativenumber")<cr>
@@ -233,6 +272,11 @@ autocmd BufRead,BufWrite,BufReadPost,BufWritePost,BufEnter * :Neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
 
+let g:neomake_python_enable_makers = ['pylint']
+
+
+let g:neomake_verbose = -1
+
 " Javascript libraries syntax
 let g:used_javascript_libs = 'underscore,angularjs,angularui,angularuirouter,react,chai,handlebars,d3'
 
@@ -268,22 +312,33 @@ function! ClipboardPaste()
   let @@ = system('xclip -o -selection clipboard')
 endfunction
 
+nnoremap <Leader>fn :let @+ = expand("%:t") \| echo 'cb> ' . @+<CR>
+" *f*ile *p*ath, ex. /home/user/nvim/init.vim
+nnoremap <Leader>fp :let @+ = expand("%:p") \| echo 'cb> ' . @+<CR>
+" *d*irectory *p*ath, ex. /home/user/nvim
+nnoremap <Leader>dp :let @+ = expand("%:p:h") \| echo 'cb> ' . @+<CR>
+" *d*irectory *n*ame, ex. nvim
+nnoremap <Leader>dn :let @+ = expand("%:p:h:t") \| echo 'cb> ' . @+<CR>
+
 " Python features
 
 " PEP8 identation
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
-
-" Show wrong whitespaces
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py set tabstop=4
+au BufRead,BufNewFile *.py set softtabstop=4
+au BufRead,BufNewFile *.py set shiftwidth=4
+au BufRead,BufNewFile *.py set textwidth=79
+au BufRead,BufNewFile *.py set expandtab
+au BufRead,BufNewFile *.py set autoindent
+au BufRead,BufNewFile *.py set fileformat=unix
 
 let python_highlight_all=1
+
+let g:python2_host_prog = '/home/uladzimir_dziomin/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/home/uladzimir_dziomin/.pyenv/versions/neovim3/bin/python'
+
+" Jedi
+let g:jedi#use_splits_not_buffers = "right"
+let g:jedi#completions_enabled = 0
 
 
 " vim-test
@@ -295,3 +350,4 @@ map <leader>sr :TestSuite<CR>
 map <leader>ss :TestNearest<CR>
 map <leader>sf :TestFile<CR>
 map <leader>sl :TestLast<CR>
+
