@@ -33,32 +33,15 @@ fail () {
 git submodule init
 git submodule update
 
-
 #
-# Section: neovim
+# Section: brew
 #
-info "Configuring vim"
-
-curl -fLo "${DOTFILES_ROOT}/nvim/autoload/plug.vim" --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-success "Vim plugin copied"
-
-mkdir -p ${XDG_CONFIG_HOME}
-echo "${DOTFILES_ROOT}"
-echo ${XDG_CONFIG_HOME}
-ln -snf "${DOTFILES_ROOT}/nvim" "${XDG_CONFIG_HOME}/nvim"
-
-success "Config has copied"
-
+info "Configuring brew"
 (
-  make set_default_nvim
-  success "Nvim is set up as default"
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  cd "${DOTFILES_ROOT}/brew"
+  brew bundle
 )
-
-vim -i NONE -c PlugUpdate -c quitall
-success "Plugins were installed"
-
 
 #
 # Section: git
@@ -82,8 +65,6 @@ ln -snf "${DOTFILES_ROOT}/zsh/oh-my-zsh" "${HOME_DIRECTORY}/.oh-my-zsh"
     git clone https://github.com/chrissicool/zsh-256color
   fi
 )
-chsh -s /bin/zsh
-
 
 #
 # Section: tmux

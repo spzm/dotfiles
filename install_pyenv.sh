@@ -9,18 +9,18 @@
 
 # sudo apt-get install python-dev libreadline-dev libbz2-dev libssl-dev libsqlite3-dev libxslt1-dev libxml2-dev
 
-pyenv install 2.7.13
-pyenv install 3.6.0
+# pyenv install 2.7.14
+# pyenv install 3.6.5
 
-pyenv virtualenv 2.7.13 neovim2
-pyenv virtualenv 3.6.0 neovim3
+# pyenv virtualenv 2.7.13 neovim2
+# pyenv virtualenv 3.6.9 neovim3
 
-pyenv activate neovim2
-pip install neovim
-pyenv which python
-pyenv deactivate
+# pyenv activate neovim2
+# pip install neovim
+# pyenv which python
+# pyenv deactivate
 
-pyenv activate neovim3
-pip install neovim
-pyenv which python
-pyenv deactivate
+# pyenv activate neovim3
+# pip install neovim
+# pyenv which python
+# pyenv deactivate
