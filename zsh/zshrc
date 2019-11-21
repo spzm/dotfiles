@@ -24,7 +24,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(sudo node git docker web-search yarn npm colorize osx zsh-255color)
+plugins=(sudo node git docker web-search yarn npm colorize osx)
 
 # BASE16_SHELL="$HOME/.config/base16-shell/base16-railscasts.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
@@ -71,16 +71,6 @@ printf "$(tput sgr0)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-
-# export ANDROID_HOME=~/Android/Sdk
-# export PATH=${PATH}:${ANDROID_HOME}/tools
-# export PATH=${PATH}:${ANDROID_HOME}/platform-tools
-# export PATH=~/build/mongodb/bin:$PATH
-# export PATH="~/bin:$PATH"
-# export PATH="~/.pyenv/bin:$PATH"
-#
-# export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 

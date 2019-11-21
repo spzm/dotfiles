@@ -29,10 +29,6 @@ fail () {
   exit
 }
 
-# Update submodules
-git submodule init
-git submodule update
-
 #
 # Section: brew
 #
@@ -42,6 +38,9 @@ info "Configuring brew"
   cd "${DOTFILES_ROOT}/brew"
   brew bundle
 )
+
+# Update submodules
+git submodule update --init --recursive
 
 #
 # Section: git
