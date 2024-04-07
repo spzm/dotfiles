@@ -1,4 +1,5 @@
 config
 .netrwhist
+Brewfile.lock.json
 *~
 nvim/plugged
