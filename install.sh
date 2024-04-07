@@ -34,7 +34,7 @@ fail () {
 #
 info "Configuring brew"
 (
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   cd "${DOTFILES_ROOT}/brew"
   brew bundle
 )
@@ -43,37 +43,39 @@ info "Configuring brew"
 git submodule update --init --recursive
 
 #
-# Section: git
+# Section: fish
 #
-info "Configurig git"
-
-ln -snf "${DOTFILES_ROOT}/git/gitconfig" "${HOME_DIRECTORY}/.gitconfig"
-success "Git config has copied"
-
-
-#
-# Section: oh-my-zsh
-#
-info "Configurig oh-my-zsh"
-
-ln -snf "${DOTFILES_ROOT}/zsh/zshrc" "${HOME_DIRECTORY}/.zshrc"
-ln -snf "${DOTFILES_ROOT}/zsh/oh-my-zsh" "${HOME_DIRECTORY}/.oh-my-zsh"
+info "Configuring fish"
 (
-  cd "${HOME_DIRECTORY}/.oh-my-zsh/plugins"
-  if [ ! -d "zsh-256color" ]; then
-    git clone https://github.com/chrissicool/zsh-256color
-  fi
+  # install oh-my-fish
+  curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
+)
+
+
+#
+# Section: nvim
+#
+info "Configuring nvim"
+(
+ ln -sfn "$DOTFILES_ROOT/nvim" "$HOME_DIRECTORY/.config/nvim"
 )
 
 #
 # Section: tmux
 #
 info "Configuring tmux"
+(
+  ln -snf "$DOTFILES_ROOT/tmux/tmux.conf" "$HOME_DIRECTORY/.tmux.conf"
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+)
 
-ln -snf "${DOTFILES_ROOT}/tmux/tmux.conf" "${HOME_DIRECTORY}/.tmux.conf"
+#
+# Section: git
+#
+info "Configurig git"
 
-success "Tmux is configured"
-
+ln -snf "$DOTFILES_ROOT/git/gitconfig" "$HOME_DIRECTORY/.gitconfig"
+success "Git config has copied"
 
 # Finishing
 
