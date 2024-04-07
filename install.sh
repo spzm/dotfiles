@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
-
 # Set variable
 
 DOTFILES_ROOT=$(pwd -P)
@@ -30,35 +27,42 @@ fail () {
 }
 
 #
-# Section: brew
+# Section: Homebrew
 #
-info "Configuring brew"
+info "Configuring Homebrew"
 (
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  if which brew >/dev/null; then
+    echo "Homebrew is already installed. Skipping."
+  else
+    echo "Installing homebrew."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+
   cd "${DOTFILES_ROOT}/brew"
   brew bundle
 )
-
-# Update submodules
-git submodule update --init --recursive
+success "Homebrew config has completed"
 
 #
 # Section: fish
 #
-info "Configuring fish"
-(
+# info "Configuring fish"
+# (
   # install oh-my-fish
-  curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install | fish
-)
-
+  # SCRIPT_NAME="install-fish"
+  # curl https://raw.githubusercontent.com/oh-my-fish/oh-my-fish/master/bin/install > "$SCRIPT_NAME"
+  # fish "$SCRIPT_NAME" --yes
+  # rm "$SCRIPT_NAME"
+# )
 
 #
 # Section: nvim
 #
-info "Configuring nvim"
+info "Configuring neovim"
 (
  ln -sfn "$DOTFILES_ROOT/nvim" "$HOME_DIRECTORY/.config/nvim"
 )
+success "Neovim config has completed"
 
 #
 # Section: tmux
@@ -68,14 +72,16 @@ info "Configuring tmux"
   ln -snf "$DOTFILES_ROOT/tmux/tmux.conf" "$HOME_DIRECTORY/.tmux.conf"
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 )
+success "Tmux config has completed"
 
 #
 # Section: git
 #
 info "Configurig git"
-
-ln -snf "$DOTFILES_ROOT/git/gitconfig" "$HOME_DIRECTORY/.gitconfig"
-success "Git config has copied"
+(
+  ln -snf "$DOTFILES_ROOT/git/gitconfig" "$HOME_DIRECTORY/.gitconfig"
+)
+success "Git config has completed"
 
 # Finishing
 
