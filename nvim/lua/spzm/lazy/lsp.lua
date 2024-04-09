@@ -142,6 +142,7 @@ return {
           'pyright',
           'rust_analyzer',
           'tsserver',
+          'yaml-language-server',
         },
         handlers = {
           lsp_zero.default_setup,
