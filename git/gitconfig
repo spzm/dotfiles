@@ -18,30 +18,53 @@
 [user]
   name = Uladzimir Dziomin
   email = uladzimir.dziomin@gmail.com
+
 [credential]
   helper = store
+
 [push]
   default = simple
+
 [core]
   editor = nvim
+  pager = delta
+
 [color]
   diff = auto
   status = auto
   branch = auto
   ui = true
+
 [merge]
   tool = vimdiff
   conflictstyle = diff3
+
 [mergetool]
   prompt = true
+
 [mergetool "vimdiff"]
   cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
 [rerere]
   enabled = true
+
 [diff]
-  tool = vimdiff
+  colorMoved = default
+  conflictstyle = diff3
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+
+    # delta detects terminal colors automatically; set one of these to disable auto-detection
+    # dark = true
+    # light = true
+
