@@ -142,6 +142,7 @@ return {
           'bashls',
           'gopls',
           'lua_ls',
+          'powershell_es',
           'pyright',
           'rust_analyzer',
           'tsserver',
