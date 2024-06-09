@@ -141,6 +141,7 @@ return {
           'azure_pipelines_ls',
           'bashls',
           'gopls',
+          'html',
           'lua_ls',
           'powershell_es',
           'pyright',
