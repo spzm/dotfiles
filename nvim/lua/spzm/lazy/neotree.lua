@@ -11,6 +11,6 @@ return {
   },
 
   opts = {
-    vim.keymap.set('n', '<leader>v', ':Neotree toggle<CR>')
+    vim.keymap.set('n', '<leader>vv', ':Neotree toggle<CR>')
   }
 }
