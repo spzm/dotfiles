@@ -149,6 +149,7 @@ return {
           'tsserver',
           'yaml-language-server',
           'terraformls',
+          'typescript-language-server',
         },
         handlers = {
           lsp_zero.default_setup,
