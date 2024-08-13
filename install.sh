@@ -56,6 +56,15 @@ success "Homebrew config has completed"
 # )
 
 #
+# Section: kitty terminal
+#
+info "Configurig kitty terminal"
+(
+  ln -snf "$DOTFILES_ROOT/kitty" "$HOME_DIRECTORY/.config/kitty"
+)
+success "Kitty config has completed"
+
+#
 # Section: nvim
 #
 info "Configuring neovim"
