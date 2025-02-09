@@ -1,71 +1,33 @@
 return {
   {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v3.x',
-    lazy = true,
-    config = false,
-    init = function()
-      -- Disable automatic setup, we are doing it manually
-      vim.g.lsp_zero_extend_cmp = 0
-      vim.g.lsp_zero_extend_lspconfig = 0
-    end,
-  },
-  {
     'williamboman/mason.nvim',
     lazy = false,
     config = true,
   },
-
-  -- Autocompletion
-  {
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    dependencies = {
-      {'L3MON4D3/LuaSnip'},
-    },
-    config = function()
-      -- Here is where you configure the autocompletion settings.
-      local lsp_zero = require('lsp-zero')
-      lsp_zero.extend_cmp()
-
-      -- And you can configure cmp even more, if you want to.
-      local cmp = require('cmp')
-      local cmp_action = lsp_zero.cmp_action()
-
-      cmp.setup({
-        formatting = lsp_zero.cmp_format({details = true}),
-        mapping = cmp.mapping.preset.insert({
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-          ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-          ['<C-Space>'] = cmp.mapping.complete(),
-        }),
-        snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-          end,
-        },
-      })
-    end
-  },
-
-  -- LSP
   {
     'neovim/nvim-lspconfig',
+    lazy = false,
     cmd = {'LspInfo', 'LspInstall', 'LspStart'},
     event = {'BufReadPre', 'BufNewFile'},
     dependencies = {
       {'hrsh7th/cmp-nvim-lsp'},
       {'williamboman/mason-lspconfig.nvim'},
     },
+    init = function()
+      -- Reserve a space in the gutter
+      -- This will avoid an annoying layout shift in the screen
+      vim.opt.signcolumn = 'yes'
+    end,
     config = function()
-      -- This is where all the LSP shenanigans will live
-      local lsp_zero = require('lsp-zero')
-      lsp_zero.extend_lspconfig()
+      local lspconfig_defaults = require('lspconfig').util.default_config
+      lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+        'force',
+        lspconfig_defaults.capabilities,
+        require('cmp_nvim_lsp').default_capabilities()
+      )
 
       vim.api.nvim_create_autocmd('LspAttach', {
+        desc = 'LSP actions',
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc)
@@ -75,10 +37,11 @@ return {
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
-          map('gd', function ()
-            require('telescope.builtin').lsp_definitions({ jump_type='vsplit' })
-          end,
-          '[G]oto [D]efinition')
+          map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+          -- map('gd', function ()
+          --   require('telescope.builtin').lsp_definitions({ jump_type='vsplit' })
+          -- end,
+          -- '[G]oto [D]efinition')
 
           -- Find references for the word under your cursor.
           map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
@@ -105,7 +68,6 @@ return {
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- The following two autocommands are used to highlight references of the
@@ -128,37 +90,23 @@ return {
         end,
       })
 
-      --- if you want to know more about lsp-zero and mason.nvim
-      --- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
-      lsp_zero.on_attach(function(client, bufnr)
-        -- see :help lsp-zero-keybindings
-        -- to learn the available actions
-        lsp_zero.default_keymaps({buffer = bufnr})
-      end)
-
       require('mason-lspconfig').setup({
         ensure_installed = {
-          'azure_pipelines_ls',
           'bashls',
           'gopls',
           'html',
           'lua_ls',
-          'powershell_es',
           'pyright',
-          'rust_analyzer',
-          'tsserver',
-          'yaml-language-server',
+          'yamlls',
           'terraformls',
-          'typescript-language-server',
+          'ts_ls',
         },
-        handlers = {
-          lsp_zero.default_setup,
-          lua_ls = function()
-            -- (Optional) Configure lua language server for neovim
-            local lua_opts = lsp_zero.nvim_lua_ls()
-            require('lspconfig').lua_ls.setup(lua_opts)
-          end,
-        }
+      })
+
+      require('mason-lspconfig').setup_handlers({
+        function(server_name)
+          require('lspconfig')[server_name].setup({})
+        end,
       })
     end
   }
