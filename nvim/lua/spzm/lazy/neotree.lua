@@ -11,6 +11,21 @@ return {
   },
 
   opts = {
-    vim.keymap.set('n', '<leader>vv', ':Neotree toggle<CR>')
-  }
+    vim.keymap.set('n', '<leader>vv', ':Neotree toggle<CR>'),
+    filesystem = {
+      filtered_items = {
+        visible = true, -- When true, they will just be displayed differently than normal items
+        hide_dotfiles = false, -- Hide files that start with a dot
+        hide_gitignored = false, -- Hide files that are gitignored
+        hide_hidden = false, -- Hide files that are hidden (have names that start with a dot)
+      },
+      follow_current_file = {
+        enabled = true, -- Focus the file that is currently being edited
+      },
+      use_libuv_file_watcher = true, -- Use the system file watcher to detect changes
+    },
+  },
+  config = function(_, opts)
+    require("neo-tree").setup(opts)
+  end,
 }
