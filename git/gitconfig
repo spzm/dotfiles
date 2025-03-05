@@ -68,3 +68,5 @@
     # dark = true
     # light = true
 
+[init]
+	defaultBranch = main
